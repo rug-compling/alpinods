@@ -2,8 +2,10 @@ package alpinods
 
 import (
 	"encoding/xml"
+	"strings"
 )
 
+// A document in alpino_ds XML format
 type AlpinoT struct {
 	XMLName  xml.Name   `xml:"alpino_ds"`
 	Version  string     `xml:"version,attr,omitempty"`
@@ -14,6 +16,8 @@ type AlpinoT struct {
 	Comments *CommentsT `xml:"comments,omitempty"`
 	Root     []*DeprelT `xml:"root,omitempty"`
 	Conllu   *ConlluT   `xml:"conllu,omitempty"`
+
+	UserData interface{} `xml:"-"`
 }
 
 type MetadataT struct {
@@ -24,6 +28,8 @@ type MetaT struct {
 	Type  string `xml:"type,attr,omitempty"`
 	Name  string `xml:"name,attr,omitempty"`
 	Value string `xml:"value,attr,omitempty"`
+
+	UserData interface{} `xml:"-"`
 }
 
 type ParserT struct {
@@ -53,7 +59,8 @@ type NodeT struct {
 	AttributesT
 	Ud   *UdT     `xml:"ud,omitempty"`
 	Node []*NodeT `xml:"node"`
-	skip bool
+
+	UserData interface{} `xml:"-"`
 }
 
 type UdT struct {
@@ -61,15 +68,28 @@ type UdT struct {
 	Form  string `xml:"form,attr,omitempty"`
 	Lemma string `xml:"lemma,attr,omitempty"`
 	Upos  string `xml:"upos,attr,omitempty"`
-	FeaturesT
+	FeatsT
 	Head       string `xml:"head,attr,omitempty"`
 	Deprel     string `xml:"deprel,attr,omitempty"`
 	DeprelMain string `xml:"deprel_main,attr,omitempty"`
 	DeprelAux  string `xml:"deprel_aux,attr,omitempty"`
 	Dep        []DepT `xml:"dep,omitempty"`
+
+	UserData interface{} `xml:"-"`
 }
 
-type FeaturesT struct {
+type DepT struct {
+	Id         string `xml:"id,attr,omitempty"`
+	Head       string `xml:"head,attr,omitempty"`
+	Deprel     string `xml:"deprel,attr,omitempty"`
+	DeprelMain string `xml:"deprel_main,attr,omitempty"`
+	DeprelAux  string `xml:"deprel_aux,attr,omitempty"`
+	Elided     bool   `xml:"elided,attr,omitempty"`
+
+	UserData interface{} `xml:"-"`
+}
+
+type FeatsT struct {
 	Abbr     string `xml:"Abbr,attr,omitempty"`
 	Case     string `xml:"Case,attr,omitempty"`
 	Definite string `xml:"Definite,attr,omitempty"`
@@ -84,16 +104,9 @@ type FeaturesT struct {
 	VerbForm string `xml:"VerbForm,attr,omitempty"`
 }
 
-type DepT struct {
-	Id         string `xml:"id,attr,omitempty"`
-	Head       string `xml:"head,attr,omitempty"`
-	Deprel     string `xml:"deprel,attr,omitempty"`
-	DeprelMain string `xml:"deprel_main,attr,omitempty"`
-	DeprelAux  string `xml:"deprel_aux,attr,omitempty"`
-	Elided     bool   `xml:"elided,attr,omitempty"`
-}
-
 type DeprelT struct {
+	XMLName xml.Name
+
 	RecursionLimit string `xml:"recursion_limit,attr,omitempty"`
 
 	Ud    string `xml:"ud,attr,omitempty"`
@@ -102,7 +115,7 @@ type DeprelT struct {
 	Form  string `xml:"form,attr,omitempty"`
 	Lemma string `xml:"lemma,attr,omitempty"`
 	Upos  string `xml:"upos,attr,omitempty"`
-	FeaturesT
+	FeatsT
 	Head      string `xml:"head,attr,omitempty"`
 	Deprel    string `xml:"deprel,attr,omitempty"`
 	DeprelAux string `xml:"deprel_aux,attr,omitempty"`
@@ -131,5 +144,19 @@ type DeprelT struct {
 	Vztype   string `xml:"vztype,attr,omitempty"`
 	Wvorm    string `xml:"wvorm,attr,omitempty"`
 
-	Dep []byte `xml:",innerxml"`
+	Deps []*DeprelT `xml:",any"`
+
+	UserData interface{} `xml:"-"`
+}
+
+func (a AlpinoT) String() string {
+	b, err := xml.MarshalIndent(a, "", "  ")
+	if err != nil {
+		panic(err) // Shouldn't happen
+	}
+	s := string(b)
+	for _, a := range []string{"parser", "meta", "node", "dep" /* , "nattr", "rattr" */} {
+		s = strings.Replace(s, "></"+a+">", "/>", -1)
+	}
+	return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + s + "\n"
 }
