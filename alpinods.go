@@ -4,7 +4,10 @@ Package alpinods implements the type AlpinoDs that can be used to
 marshal and unmarshall XML files in the alpino_ds format, using the
 package encoding/xml.
 
-See: https://www.let.rug.nl/~vannoord/alp/Alpino/
+The field UserData in several places can be used for storing
+processing information.
+
+About Alpino, see: https://www.let.rug.nl/~vannoord/alp/Alpino/
 
 */
 package alpinods
@@ -14,10 +17,11 @@ import (
 	"strings"
 )
 
-// Highest supported alpino_ds.dtd version
+// The highest supported alpino_ds.dtd version.
 const DtdVersion = "1.10"
 
-// An XML document in the alpino_ds format.
+// The AlpinoDs type encodes a complete document in the alpino_ds XML
+// format.
 type AlpinoDs struct {
 	XMLName  xml.Name  `xml:"alpino_ds"`
 	Version  string    `xml:"version,attr,omitempty"`
@@ -32,10 +36,12 @@ type AlpinoDs struct {
 	UserData interface{} `xml:"-"`
 }
 
+// The Metadata type encodes `/alpino_ds/metadata`.
 type Metadata struct {
 	Meta []Meta `xml:"meta,omitempty"`
 }
 
+// The Meta type encodes `/alpino_ds/metadata/meta`.
 type Meta struct {
 	Type  string `xml:"type,attr,omitempty"`
 	Name  string `xml:"name,attr,omitempty"`
@@ -44,6 +50,7 @@ type Meta struct {
 	UserData interface{} `xml:"-"`
 }
 
+// The Parser type encodes `/alpino_ds/parser`.
 type Parser struct {
 	Build string `xml:"build,attr,omitempty"`
 	Date  string `xml:"date,attr,omitempty"`
@@ -51,15 +58,18 @@ type Parser struct {
 	Skips string `xml:"skips,attr,omitempty"`
 }
 
+// The Comments type encodes `/alpino_ds/comments`.
 type Comments struct {
 	Comment []string `xml:"comment,omitempty"`
 }
 
+// The Sentence type encodes `/alpino_ds/sentence`.
 type Sentence struct {
 	Sentence string `xml:",chardata"`
-	SentId   string `xml:"sentid,attr,omitempty"`
+	SentID   string `xml:"sentid,attr,omitempty"`
 }
 
+// The Conllu type encodes `/alpino_ds/conllu`.
 type Conllu struct {
 	Conllu string `xml:",cdata"`
 	Status string `xml:"status,attr,omitempty"`
@@ -67,6 +77,8 @@ type Conllu struct {
 	Auto   string `xml:"auto,attr,omitempty"`
 }
 
+// The NodeAttributes type encodes the attributes for
+// `/alpino_ds//node`.
 type NodeAttributes struct {
 	Aform        string `xml:"aform,attr,omitempty"`
 	Begin        int    `xml:"begin,attr"`
@@ -101,7 +113,7 @@ type NodeAttributes struct {
 	His212       string `xml:"his_2_1_2,attr,omitempty"`
 	His221       string `xml:"his_2_2_1,attr,omitempty"`
 	His222       string `xml:"his_2_2_2,attr,omitempty"`
-	Id           int    `xml:"id,attr"`
+	ID           int    `xml:"id,attr"`
 	Iets         string `xml:"iets,attr,omitempty"`
 	Index        int    `xml:"index,attr,omitempty"`
 	Infl         string `xml:"infl,attr,omitempty"`
@@ -148,6 +160,7 @@ type NodeAttributes struct {
 	Wvorm        string `xml:"wvorm,attr,omitempty"`
 }
 
+// The Node type encodes `/alpino//node`.
 type Node struct {
 	NodeAttributes
 	Ud       *Ud         `xml:"ud,omitempty"`
@@ -155,8 +168,9 @@ type Node struct {
 	UserData interface{} `xml:"-"`
 }
 
+// The Ud type encodes `/alpino//node/ud`.
 type Ud struct {
-	Id    string `xml:"id,attr,omitempty"`
+	ID    string `xml:"id,attr,omitempty"`
 	Form  string `xml:"form,attr,omitempty"`
 	Lemma string `xml:"lemma,attr,omitempty"`
 	Upos  string `xml:"upos,attr,omitempty"`
@@ -170,8 +184,9 @@ type Ud struct {
 	UserData interface{} `xml:"-"`
 }
 
+// The Dep type encodes `/alpino//node/ud/dep`.
 type Dep struct {
-	Id         string `xml:"id,attr,omitempty"`
+	ID         string `xml:"id,attr,omitempty"`
 	Head       string `xml:"head,attr,omitempty"`
 	Deprel     string `xml:"deprel,attr,omitempty"`
 	DeprelMain string `xml:"deprel_main,attr,omitempty"`
@@ -181,7 +196,8 @@ type Dep struct {
 	UserData interface{} `xml:"-"`
 }
 
-// Standard UD features used in Alpino
+// The Feats type encodes the standard UD features that are used in
+// Alpino.
 type Feats struct {
 	Abbr     string `xml:"Abbr,attr,omitempty"`
 	Case     string `xml:"Case,attr,omitempty"`
@@ -197,7 +213,8 @@ type Feats struct {
 	VerbForm string `xml:"VerbForm,attr,omitempty"`
 }
 
-// Node attributes duplicated into Deprel
+// The DeprelAttributes type encodes attributes that are copied from
+// `/alpino_ds//node` into `/alpino_ds/root` and its descendants.
 type DeprelAttributes struct {
 	Buiging  string `xml:"buiging,attr,omitempty"`
 	Conjtype string `xml:"conjtype,attr,omitempty"`
@@ -224,14 +241,14 @@ type DeprelAttributes struct {
 	Wvorm    string `xml:"wvorm,attr,omitempty"`
 }
 
+// The Deprel type encodes `/alpino_ds/root` and its descendants.
 type Deprel struct {
 	XMLName xml.Name
 
 	RecursionLimit string `xml:"recursion_limit,attr,omitempty"`
 
 	Ud    string `xml:"ud,attr,omitempty"`
-	Id    string `xml:"id,attr,omitempty"`
-	Eid   string `xml:"eid,attr,omitempty"`
+	ID    string `xml:"id,attr,omitempty"`
 	Form  string `xml:"form,attr,omitempty"`
 	Lemma string `xml:"lemma,attr,omitempty"`
 	Upos  string `xml:"upos,attr,omitempty"`
@@ -247,10 +264,11 @@ type Deprel struct {
 	UserData interface{} `xml:"-"`
 }
 
+// The String method returns the AlpinoDs type as a complete, cleaned-up, and formatted XML document.
 func (a AlpinoDs) String() string {
 	b, err := xml.MarshalIndent(a, "", "  ")
 	if err != nil {
-		panic(err) // This should never happen
+		panic(err) // This should never happen!
 	}
 	s := string(b)
 	for _, a := range []string{"parser", "meta", "node", "dep"} {
