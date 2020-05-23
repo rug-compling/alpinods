@@ -19,24 +19,24 @@ const DtdVersion = "1.10"
 
 // An XML document in the alpino_ds format.
 type AlpinoDs struct {
-	XMLName  xml.Name   `xml:"alpino_ds"`
-	Version  string     `xml:"version,attr,omitempty"`
-	Metadata *MetadataT `xml:"metadata,omitempty"`
-	Parser   *ParserT   `xml:"parser,omitempty"`
-	Node     *NodeT     `xml:"node,omitempty"`
-	Sentence *SentenceT `xml:"sentence,omitempty"`
-	Comments *CommentsT `xml:"comments,omitempty"`
-	Root     []*DeprelT `xml:"root,omitempty"`
-	Conllu   *ConlluT   `xml:"conllu,omitempty"`
+	XMLName  xml.Name  `xml:"alpino_ds"`
+	Version  string    `xml:"version,attr,omitempty"`
+	Metadata *Metadata `xml:"metadata,omitempty"`
+	Parser   *Parser   `xml:"parser,omitempty"`
+	Node     *Node     `xml:"node,omitempty"`
+	Sentence *Sentence `xml:"sentence,omitempty"`
+	Comments *Comments `xml:"comments,omitempty"`
+	Root     []*Deprel `xml:"root,omitempty"`
+	Conllu   *Conllu   `xml:"conllu,omitempty"`
 
 	UserData interface{} `xml:"-"`
 }
 
-type MetadataT struct {
-	Meta []MetaT `xml:"meta,omitempty"`
+type Metadata struct {
+	Meta []Meta `xml:"meta,omitempty"`
 }
 
-type MetaT struct {
+type Meta struct {
 	Type  string `xml:"type,attr,omitempty"`
 	Name  string `xml:"name,attr,omitempty"`
 	Value string `xml:"value,attr,omitempty"`
@@ -44,30 +44,30 @@ type MetaT struct {
 	UserData interface{} `xml:"-"`
 }
 
-type ParserT struct {
+type Parser struct {
 	Build string `xml:"build,attr,omitempty"`
 	Date  string `xml:"date,attr,omitempty"`
 	Cats  string `xml:"cats,attr,omitempty"`
 	Skips string `xml:"skips,attr,omitempty"`
 }
 
-type CommentsT struct {
+type Comments struct {
 	Comment []string `xml:"comment,omitempty"`
 }
 
-type SentenceT struct {
+type Sentence struct {
 	Sentence string `xml:",chardata"`
 	SentId   string `xml:"sentid,attr,omitempty"`
 }
 
-type ConlluT struct {
+type Conllu struct {
 	Conllu string `xml:",cdata"`
 	Status string `xml:"status,attr,omitempty"`
 	Error  string `xml:"error,attr,omitempty"`
 	Auto   string `xml:"auto,attr,omitempty"`
 }
 
-type NodeT struct {
+type NodeAttributes struct {
 	Aform        string `xml:"aform,attr,omitempty"`
 	Begin        int    `xml:"begin,attr"`
 	Buiging      string `xml:"buiging,attr,omitempty"`
@@ -103,7 +103,7 @@ type NodeT struct {
 	His222       string `xml:"his_2_2_2,attr,omitempty"`
 	Id           int    `xml:"id,attr"`
 	Iets         string `xml:"iets,attr,omitempty"`
-	Index        string `xml:"index,attr,omitempty"`
+	Index        int    `xml:"index,attr,omitempty"`
 	Infl         string `xml:"infl,attr,omitempty"`
 	Lcat         string `xml:"lcat,attr,omitempty"`
 	Lemma        string `xml:"lemma,attr,omitempty"`
@@ -146,29 +146,31 @@ type NodeT struct {
 	Wk           string `xml:"wk,attr,omitempty"`
 	Word         string `xml:"word,attr,omitempty"`
 	Wvorm        string `xml:"wvorm,attr,omitempty"`
+}
 
-	Ud   *UdT     `xml:"ud,omitempty"`
-	Node []*NodeT `xml:"node"`
-
+type Node struct {
+	NodeAttributes
+	Ud       *Ud         `xml:"ud,omitempty"`
+	Node     []*Node     `xml:"node"`
 	UserData interface{} `xml:"-"`
 }
 
-type UdT struct {
+type Ud struct {
 	Id    string `xml:"id,attr,omitempty"`
 	Form  string `xml:"form,attr,omitempty"`
 	Lemma string `xml:"lemma,attr,omitempty"`
 	Upos  string `xml:"upos,attr,omitempty"`
-	FeatsT
+	Feats
 	Head       string `xml:"head,attr,omitempty"`
 	Deprel     string `xml:"deprel,attr,omitempty"`
 	DeprelMain string `xml:"deprel_main,attr,omitempty"`
 	DeprelAux  string `xml:"deprel_aux,attr,omitempty"`
-	Dep        []DepT `xml:"dep,omitempty"`
+	Dep        []Dep  `xml:"dep,omitempty"`
 
 	UserData interface{} `xml:"-"`
 }
 
-type DepT struct {
+type Dep struct {
 	Id         string `xml:"id,attr,omitempty"`
 	Head       string `xml:"head,attr,omitempty"`
 	Deprel     string `xml:"deprel,attr,omitempty"`
@@ -179,7 +181,8 @@ type DepT struct {
 	UserData interface{} `xml:"-"`
 }
 
-type FeatsT struct {
+// Standard UD features used in Alpino
+type Feats struct {
 	Abbr     string `xml:"Abbr,attr,omitempty"`
 	Case     string `xml:"Case,attr,omitempty"`
 	Definite string `xml:"Definite,attr,omitempty"`
@@ -194,22 +197,8 @@ type FeatsT struct {
 	VerbForm string `xml:"VerbForm,attr,omitempty"`
 }
 
-type DeprelT struct {
-	XMLName xml.Name
-
-	RecursionLimit string `xml:"recursion_limit,attr,omitempty"`
-
-	Ud    string `xml:"ud,attr,omitempty"`
-	Id    string `xml:"id,attr,omitempty"`
-	Eid   string `xml:"eid,attr,omitempty"`
-	Form  string `xml:"form,attr,omitempty"`
-	Lemma string `xml:"lemma,attr,omitempty"`
-	Upos  string `xml:"upos,attr,omitempty"`
-	FeatsT
-	Head      string `xml:"head,attr,omitempty"`
-	Deprel    string `xml:"deprel,attr,omitempty"`
-	DeprelAux string `xml:"deprel_aux,attr,omitempty"`
-
+// Node attributes duplicated into Deprel
+type DeprelAttributes struct {
 	Buiging  string `xml:"buiging,attr,omitempty"`
 	Conjtype string `xml:"conjtype,attr,omitempty"`
 	Dial     string `xml:"dial,attr,omitempty"`
@@ -233,8 +222,27 @@ type DeprelT struct {
 	Vwtype   string `xml:"vwtype,attr,omitempty"`
 	Vztype   string `xml:"vztype,attr,omitempty"`
 	Wvorm    string `xml:"wvorm,attr,omitempty"`
+}
 
-	Deps []*DeprelT `xml:",any"`
+type Deprel struct {
+	XMLName xml.Name
+
+	RecursionLimit string `xml:"recursion_limit,attr,omitempty"`
+
+	Ud    string `xml:"ud,attr,omitempty"`
+	Id    string `xml:"id,attr,omitempty"`
+	Eid   string `xml:"eid,attr,omitempty"`
+	Form  string `xml:"form,attr,omitempty"`
+	Lemma string `xml:"lemma,attr,omitempty"`
+	Upos  string `xml:"upos,attr,omitempty"`
+	Feats
+	Head      string `xml:"head,attr,omitempty"`
+	Deprel    string `xml:"deprel,attr,omitempty"`
+	DeprelAux string `xml:"deprel_aux,attr,omitempty"`
+
+	DeprelAttributes
+
+	Deps []*Deprel `xml:",any"`
 
 	UserData interface{} `xml:"-"`
 }
