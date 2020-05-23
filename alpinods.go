@@ -160,7 +160,7 @@ type NodeAttributes struct {
 	Wvorm        string `xml:"wvorm,attr,omitempty"`
 }
 
-// The Node type encodes `/alpino//node`.
+// The Node type encodes `/alpino_ds//node`.
 type Node struct {
 	NodeAttributes
 	Ud       *Ud         `xml:"ud,omitempty"`
@@ -168,7 +168,7 @@ type Node struct {
 	UserData interface{} `xml:"-"`
 }
 
-// The Ud type encodes `/alpino//node/ud`.
+// The Ud type encodes `/alpino_ds//node/ud`.
 type Ud struct {
 	ID    string `xml:"id,attr,omitempty"`
 	Form  string `xml:"form,attr,omitempty"`
@@ -184,7 +184,7 @@ type Ud struct {
 	UserData interface{} `xml:"-"`
 }
 
-// The Dep type encodes `/alpino//node/ud/dep`.
+// The Dep type encodes `/alpino_ds//node/ud/dep`.
 type Dep struct {
 	ID         string `xml:"id,attr,omitempty"`
 	Head       string `xml:"head,attr,omitempty"`
