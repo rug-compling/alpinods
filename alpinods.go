@@ -1,6 +1,6 @@
 /*
 
-Package alpinods implements the type AlpinoDs that can be used to
+Package alpinods implements the type AlpinoDS that can be used to
 marshal and unmarshall XML files in the alpino_ds format, using the
 package encoding/xml.
 
@@ -20,9 +20,9 @@ import (
 // DtdVersion defines the highest supported alpino_ds.dtd version.
 const DtdVersion = "1.10"
 
-// The AlpinoDs type encodes a complete document in the alpino_ds XML
+// The AlpinoDS type encodes a complete document in the alpino_ds XML
 // format.
-type AlpinoDs struct {
+type AlpinoDS struct {
 	XMLName  xml.Name  `xml:"alpino_ds"`
 	Version  string    `xml:"version,attr,omitempty"`
 	Metadata *Metadata `xml:"metadata,omitempty"`
@@ -264,8 +264,8 @@ type Deprel struct {
 	UserData interface{} `xml:"-"`
 }
 
-// The String method returns the AlpinoDs type as a complete, cleaned-up, and formatted XML document.
-func (a AlpinoDs) String() string {
+// The String method returns the AlpinoDS type as a complete, cleaned-up, and formatted XML document.
+func (a AlpinoDS) String() string {
 	b, err := xml.MarshalIndent(a, "", "  ")
 	if err != nil {
 		panic(err) // This should never happen!
