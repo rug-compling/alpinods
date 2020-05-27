@@ -18,7 +18,7 @@ import (
 )
 
 // DtdVersion defines the highest supported alpino_ds.dtd version.
-const DtdVersion = "1.10"
+const DtdVersion = "1.11"
 
 // The AlpinoDS type encodes a complete document in the alpino_ds XML
 // format.
@@ -43,9 +43,9 @@ type Metadata struct {
 
 // The Meta type encodes `/alpino_ds/metadata/meta`.
 type Meta struct {
-	Type  string `xml:"type,attr,omitempty"`
-	Name  string `xml:"name,attr,omitempty"`
-	Value string `xml:"value,attr,omitempty"`
+	Type  string `xml:"type,attr"`
+	Name  string `xml:"name,attr"`
+	Value string `xml:"value,attr"`
 
 	UserData interface{} `xml:"-"`
 }
@@ -163,8 +163,20 @@ type NodeAttributes struct {
 // The Node type encodes `/alpino_ds//node`.
 type Node struct {
 	NodeAttributes
-	Ud       *Ud         `xml:"ud,omitempty"`
-	Node     []*Node     `xml:"node"`
+	Nattr []*RNattr `xml:"nattr,omitempty"`
+	Rattr []*RNattr `xml:"rattr,omitempty"`
+	Ud    *Ud       `xml:"ud,omitempty"`
+	Node  []*Node   `xml:"node"`
+
+	UserData interface{} `xml:"-"`
+}
+
+// The RNattr type encodes `alpino_ds//node/nattr` and `alpino_ds//node/rattr`
+type RNattr struct {
+	Type  string `xml:"type,attr"`
+	Name  string `xml:"name,attr"`
+	Value string `xml:"value,attr"`
+
 	UserData interface{} `xml:"-"`
 }
 
