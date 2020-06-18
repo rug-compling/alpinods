@@ -163,19 +163,17 @@ type NodeAttributes struct {
 // The Node type encodes `/alpino_ds//node`.
 type Node struct {
 	NodeAttributes
-	Nattr []*NRattr `xml:"nattr,omitempty"`
-	Rattr []*NRattr `xml:"rattr,omitempty"`
-	Ud    *Ud       `xml:"ud,omitempty"`
-	Node  []*Node   `xml:"node"`
+	Data []*Data `xml:"data,omitempty"`
+	Ud   *Ud     `xml:"ud,omitempty"`
+	Node []*Node `xml:"node"`
 
 	UserData interface{} `xml:"-"`
 }
 
-// The NRattr type encodes `alpino_ds//node/nattr` and `alpino_ds//node/rattr`
-type NRattr struct {
-	Type  string `xml:"type,attr"`
-	Name  string `xml:"name,attr"`
-	Value string `xml:"value,attr"`
+// The Data type encodes `alpino_ds//node/data`
+type Data struct {
+	Name string `xml:"name,attr,omitempty"`
+	Data string `xml:",chardata"`
 
 	UserData interface{} `xml:"-"`
 }
@@ -283,7 +281,7 @@ func (a AlpinoDS) String() string {
 		panic(err) // This should never happen!
 	}
 	s := string(b)
-	for _, a := range []string{"parser", "meta", "node", "dep", "nattr", "rattr"} {
+	for _, a := range []string{"parser", "meta", "node", "dep", "data"} {
 		s = strings.Replace(s, "></"+a+">", "/>", -1)
 	}
 	return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + s + "\n"
