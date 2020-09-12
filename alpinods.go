@@ -125,6 +125,7 @@ type NodeAttributes struct {
 	Naamval     string `xml:"naamval,attr,omitempty"`
 	Neclass     string `xml:"neclass,attr,omitempty"`
 
+	Ne      string `xml:"ne,attr,omitempty"`
 	NeVal   string `xml:"ne_val,attr,omitempty"`
 	NeBegin string `xml:"ne_begin,attr,omitempty"`
 	NeEnd   string `xml:"ne_end,attr,omitempty"`
