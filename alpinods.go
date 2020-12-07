@@ -14,6 +14,7 @@ package alpinods
 
 import (
 	"encoding/xml"
+	"regexp"
 	"strings"
 )
 
@@ -278,6 +279,17 @@ type Deprel struct {
 	UserData interface{} `xml:"-"`
 }
 
+var (
+	reEnts = regexp.MustCompile("&#(34|38|39|60|62);")
+	ents   = map[string]string{
+		"&#34;": "&quot;",
+		"&#38;": "&amp;",
+		"&#39;": "&apos;",
+		"&#60;": "&lt;",
+		"&#62;": "&gt;",
+	}
+)
+
 // The String method returns the AlpinoDS type as a complete, cleaned-up, and formatted XML document.
 func (a AlpinoDS) String() string {
 	b, err := xml.MarshalIndent(a, "", "  ")
@@ -288,5 +300,8 @@ func (a AlpinoDS) String() string {
 	for _, a := range []string{"parser", "meta", "node", "dep", "data"} {
 		s = strings.Replace(s, "></"+a+">", "/>", -1)
 	}
+	s = reEnts.ReplaceAllStringFunc(s, func(s1 string) string {
+		return ents[s1]
+	})
 	return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + s + "\n"
 }
