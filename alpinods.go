@@ -15,7 +15,6 @@ package alpinods
 import (
 	"encoding/xml"
 	"regexp"
-	"strings"
 )
 
 // DtdVersion defines the highest supported alpino_ds.dtd version.
@@ -280,6 +279,9 @@ type Deprel struct {
 }
 
 var (
+	reShorted  = regexp.MustCompile(`></(meta|parser|node|data|dep|acl|advcl|advmod|amod|appos|aux|case|cc|ccomp|clf|compound|conj|cop|csubj|det|discourse|dislocated|expl|fixed|flat|goeswith|iobj|list|mark|nmod|nsubj|nummod|obj|obl|orphan|parataxis|punct|ref|reparandum|root|vocative|xcomp)>`)
+	reNoConllu = regexp.MustCompile(`><!\[CDATA\[\s*\]\]></conllu>`)
+
 	reEnts = regexp.MustCompile("&#(34|38|39|60|62);")
 	ents   = map[string]string{
 		"&#34;": "&quot;",
@@ -297,11 +299,15 @@ func (a AlpinoDS) String() string {
 		panic(err) // This should never happen!
 	}
 	s := string(b)
-	for _, a := range []string{"parser", "meta", "node", "dep", "data"} {
-		s = strings.Replace(s, "></"+a+">", "/>", -1)
-	}
+
+	// shorten
+	s = reShorted.ReplaceAllString(s, "/>")
+	s = reNoConllu.ReplaceAllString(s, "/>")
+
+	// standard XML entities
 	s = reEnts.ReplaceAllStringFunc(s, func(s1 string) string {
 		return ents[s1]
 	})
+
 	return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + s + "\n"
 }
