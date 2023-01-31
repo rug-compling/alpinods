@@ -1,5 +1,4 @@
 /*
-
 Package alpinods implements the type AlpinoDS that can be used to
 marshal and unmarshall XML files in the alpino_ds format, using the
 package encoding/xml.
@@ -8,7 +7,6 @@ The field UserData in several places can be used for storing
 processing information.
 
 About Alpino, see: https://www.let.rug.nl/~vannoord/alp/Alpino/
-
 */
 package alpinods
 
@@ -117,6 +115,8 @@ type NodeAttributes struct {
 	Iets         string `xml:"iets,attr,omitempty"`
 	Index        int    `xml:"index,attr,omitempty"`
 	Infl         string `xml:"infl,attr,omitempty"`
+	IsNachfeld   string `xml:"is_nachfeld,attr,omitempty"`
+	IsVorfeld    string `xml:"is_vorfeld,attr,omitempty"`
 	Lcat         string `xml:"lcat,attr,omitempty"`
 	Lemma        string `xml:"lemma,attr,omitempty"`
 	Lwtype       string `xml:"lwtype,attr,omitempty"`
