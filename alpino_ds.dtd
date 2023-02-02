@@ -3,6 +3,12 @@
 <!-- Alpino Dependency Structures DTD -->
 
 <!--
+
+Versie 1.13 per 2 februari 2023
+
+ - is_np
+ - is_vorfeld, is_nachfeld
+
 Versie 1.12 per 16 september 2020
 
  - sonar_ne_class, sonar_ne_begin, sonar_ne_end, sonar_ne
@@ -334,6 +340,9 @@ recursion_limit CDATA			#IMPLIED
           sonar_ne_end   CDATA #IMPLIED
           sonar_ne       CDATA #IMPLIED
 
+	  is_np          (true) #IMPLIED
+	  is_vorfeld     (true) #IMPLIED
+	  is_nachfeld    (true) #IMPLIED
 >
 
 <!-- pb - propbank role op verzoek van Universiteit Utrecht -->

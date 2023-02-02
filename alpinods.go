@@ -116,6 +116,7 @@ type NodeAttributes struct {
 	Index        int    `xml:"index,attr,omitempty"`
 	Infl         string `xml:"infl,attr,omitempty"`
 	IsNachfeld   string `xml:"is_nachfeld,attr,omitempty"`
+	IsNp         string `xml:"is_np,attr,omitempty"`
 	IsVorfeld    string `xml:"is_vorfeld,attr,omitempty"`
 	Lcat         string `xml:"lcat,attr,omitempty"`
 	Lemma        string `xml:"lemma,attr,omitempty"`
