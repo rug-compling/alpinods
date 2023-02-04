@@ -12,7 +12,10 @@ package alpinods
 
 import (
 	"encoding/xml"
+	"fmt"
+	"reflect"
 	"regexp"
+	"strings"
 )
 
 // DtdVersion defines the highest supported alpino_ds.dtd version.
@@ -279,6 +282,11 @@ type Deprel struct {
 	UserData interface{} `xml:"-"`
 }
 
+type Attr struct {
+	Name  string
+	Value string
+}
+
 var (
 	reShorted  = regexp.MustCompile(`></(meta|parser|node|data|dep|acl|advcl|advmod|amod|appos|aux|case|cc|ccomp|clf|compound|conj|cop|csubj|det|discourse|dislocated|expl|fixed|flat|goeswith|iobj|list|mark|nmod|nsubj|nummod|obj|obl|orphan|parataxis|punct|ref|reparandum|root|vocative|xcomp)>`)
 	reNoConllu = regexp.MustCompile(`><!\[CDATA\[\s*\]\]></conllu>`)
@@ -311,4 +319,34 @@ func (a AlpinoDS) String() string {
 	})
 
 	return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + s + "\n"
+}
+
+// The Attrs method returns a list of non-nil attributes of node
+func (node *Node) Attrs() []Attr {
+	attr := make([]Attr, 0)
+
+	v := reflect.ValueOf(node.NodeAttributes)
+	t := reflect.TypeOf(node.NodeAttributes)
+	n := v.NumField()
+	for i := 0; i < n; i++ {
+		value := fmt.Sprint(v.Field(i).Interface())
+		if value == "" {
+			continue
+		}
+		f := t.Field(i)
+		x, ok := f.Tag.Lookup("xml")
+		if ok {
+			name := strings.Split(x, ",")[0]
+			if name == "index" && value == "0" {
+				continue
+			}
+			attr = append(attr, Attr{
+				Name:  name,
+				Value: value,
+			})
+		}
+	}
+
+	return attr
+
 }
