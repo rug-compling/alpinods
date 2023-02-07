@@ -90,6 +90,8 @@ type NodeAttributes struct {
 	Conjtype     string `xml:"conjtype,attr,omitempty"`
 	Def          string `xml:"def,attr,omitempty"`
 	Dial         string `xml:"dial,attr,omitempty"`
+	DroppedAgr   string `xml:"dropped_agr,attr,omitempty"`
+	DroppedPrs   string `xml:"dropped_prs,attr,omitempty"`
 	Dscmanual    string `xml:"dscmanual,attr,omitempty"`
 	Dscsense     string `xml:"dscsense,attr,omitempty"`
 	End          int    `xml:"end,attr"`
@@ -159,6 +161,7 @@ type NodeAttributes struct {
 	Status       string `xml:"status,attr,omitempty"`
 	Stype        string `xml:"stype,attr,omitempty"`
 	Tense        string `xml:"tense,attr,omitempty"`
+	VPer         string `xml:"v_per,attr,omitempty"`
 	Vform        string `xml:"vform,attr,omitempty"`
 	Vwtype       string `xml:"vwtype,attr,omitempty"`
 	Vztype       string `xml:"vztype,attr,omitempty"`
