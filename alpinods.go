@@ -19,7 +19,7 @@ import (
 )
 
 // DtdVersion defines the highest supported alpino_ds.dtd version.
-const DtdVersion = "1.13"
+const DtdVersion = "1.16"
 
 // The AlpinoDS type encodes a complete document in the alpino_ds XML
 // format.
