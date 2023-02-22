@@ -290,6 +290,11 @@ type Attr struct {
 	Value string
 }
 
+type Attrib struct {
+	Field string
+	Name  string
+}
+
 var (
 	reShorted  = regexp.MustCompile(`></(meta|parser|node|data|dep|acl|advcl|advmod|amod|appos|aux|case|cc|ccomp|clf|compound|conj|cop|csubj|det|discourse|dislocated|expl|fixed|flat|goeswith|iobj|list|mark|nmod|nsubj|nummod|obj|obl|orphan|parataxis|punct|ref|reparandum|root|vocative|xcomp)>`)
 	reNoConllu = regexp.MustCompile(`><!\[CDATA\[\s*\]\]></conllu>`)
@@ -352,4 +357,26 @@ func (node *Node) Attrs() []Attr {
 
 	return attr
 
+}
+
+// Attribs return a list of all Node attributes, field and name.
+// Useful for code generation
+func Attribs() []Attrib {
+	attrib := make([]Attrib, 0)
+
+	na := NodeAttributes{}
+	t := reflect.TypeOf(na)
+	n := t.NumField()
+	for i := 0; i < n; i++ {
+		f := t.Field(i)
+		x, ok := f.Tag.Lookup("xml")
+		if ok {
+			attrib = append(attrib, Attrib{
+				Field: f.Name,
+				Name:  strings.Split(x, ",")[0],
+			})
+		}
+	}
+
+	return attrib
 }
