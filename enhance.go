@@ -23,23 +23,23 @@ type context struct {
 // In addition, it sets the document version to DtdVersion.
 //
 // Old values for the chosen options are erased.
-func (alpino *AlpinoDS) Enhance(f Features) {
+func (a *AlpinoDS) Enhance(f Features) {
 
-	alpino.Version = DtdVersion
+	a.Version = DtdVersion
 
 	q := &context{
 		idxnodes: make(map[int]*Node),
 	}
-	prepare(alpino.Node, f, q)
+	prepare(a.Node, f, q)
 
 	if f&Fnp != 0 {
-		doNp(alpino.Node, q)
+		doNp(a.Node, q)
 	}
 	if f&Fvorfeld != 0 {
-		doVorfeld(alpino.Node, q)
+		doVorfeld(a.Node, q)
 	}
 	if f&Fnachfeld != 0 {
-		doNachfeld(alpino.Node, q)
+		doNachfeld(a.Node, q)
 	}
 }
 
