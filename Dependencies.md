@@ -9,7 +9,6 @@ Afhankelijkheden van `alpino_ds.dtd`
     - PaQu
         - `src/go.mod`
         - `src/internal/file/data/macros.txt` (versienummers)
-        - `~/web/site/paqu/go.mod`
     - AlpinoGraph
         - `go.mod`
         - `ag/alpino2agens.go`
