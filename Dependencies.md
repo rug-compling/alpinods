@@ -20,3 +20,5 @@ Afhankelijkheden van `alpino_ds.dtd`
         - `go.mod`
     - `/net/aps/haytabo/opt/alpinotools`
         - `go.mod`
+    - Alpino in Docker
+        - `/opt/dbxml_tools/go.mod`
