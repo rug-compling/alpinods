@@ -22,3 +22,5 @@ Afhankelijkheden van `alpino_ds.dtd`
         - `go.mod`
     - Alpino in Docker
         - `/opt/dbxml_tools/go.mod`
+    - alto
+        - `go.mod`
