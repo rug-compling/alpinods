@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Alpino Dependency Structures DTD -->
+
+<!--
+This is a reduced version of the DTD version 1.5
+
+It includes only the entities and attributes that
+are used in the minimal Alpino plug-in for TrEd.
+
+See: https://www.let.rug.nl/vannoord/alp/Alpino/tred/
+-->
+
+<!-- These attributes are created by the Alpino plug-in upon save by TrEd -->
+<!ENTITY % nodeattr "
+conjtype	(neven|onder)								#IMPLIED
+dial		(dial)									#IMPLIED
+lwtype		(bep|onbep)								#IMPLIED
+ntype		(soort|eigen)								#IMPLIED
+numtype		(hoofd|rang)								#IMPLIED
+positie		(prenom|nom|postnom|vrij)						#IMPLIED
+pt		(let|spec|bw|vg|lid|vnw|tw|ww|adj|n|tsw|vz|na)				#IMPLIED
+spectype	(afgebr|onverst|vreemd|deeleigen|meta|comment|achter|afk|symb|enof)	#IMPLIED
+vwtype		(pr|pers|refl|recip|bez|vb|vrag|betr|excl|aanw|onbep)			#IMPLIED
+vztype		(init|versm|fin)							#IMPLIED
+wvorm		(pv|inf|od|vd)								#IMPLIED
+" >
+
+<!--			Alpino Dependency Structure			-->
+<!ELEMENT alpino_ds	(metadata?, node, sentence, comments?)			 >
+<!ATTLIST alpino_ds
+	  version	NMTOKEN		#IMPLIED>
+
+<!--
+	meta-data zoals voorgesteld door P. Kleiweg voor PaQu project
+
+	attribuut "type", verplicht, geldige waardes: "text", "int",
+	"float", "date", "datetime", "bool"
+	attribuut "name", verplicht
+	"name" hoeft niet uniek te zijn, maar als het vaker voorkomt moet die
+	metadata van hetzelfde type zijn.
+	Hetzelfde geldt voor een heel corpus in PaQu.
+	attribuut "value", verplicht, formaat afhankelijk van "type":
+	type="int"
+		waarde in decimale notatie die een 32-bits signed integer
+		representeert, waarbij de maximumwaarde is gereserveerd binnen
+		PaQu. Blijft over: -2147483648 t/m 2147483646
+	type="float"
+		waarde die een 32-bits float representeert, gebruikelijke
+		notaties: decimaal, met/zonder punt, met/zonder exponent
+	type="date"
+		Datum zonder tijdzone in bereik "1000-01-01" t/m "9999-12-31",
+		in dit formaat
+	type="datetime"
+		Datum (zelfde bereik) plus tijd zonder tijdzone, zoals
+		"2015-01-31 01:59" of, met seconden zoals "2015-01-31 01:59:59"
+	type="bool"
+		waarde is "true" of "false"
+
+-->
+<!ELEMENT metadata	(meta*) >
+<!-- meta is an elemnent with only attributes, how to define it? -->
+
+<!ELEMENT meta		EMPTY >
+<!ATTLIST meta
+	  type		(text|int|float|date|datetime|bool)	#REQUIRED
+	  name		CDATA					#REQUIRED
+	  value		CDATA					#REQUIRED
+>
+
+
+<!--			Node						-->
+<!--			een knoop van een dependency tree		-->
+<!ELEMENT  node		(node*)				>
+<!--
+	rel		de dependency relatie van de knoop
+	cat		de categorie van de knoop
+	pos		de part of speech tag van de knoop ALPINO-stijl
+	postag		de part of speech tag van de knoop CGN/DCOI/LASSY-stijl
+	lemma		de lemma van de knoop CGN/DCOI/LASSY-stijl
+	begin		de beginpositie van de bijbehorende woordgroep in de gehele zin
+	end		de eindpositie van de bijbehorende woordgroep in de gehele zin
+	root		de stam van het woord ALPINO-stijl
+	word		het woord zoals het in de zin voorkomt
+	index		een co-index om gedeelde structuren mogelijk te maken
+	id		een per zin uniek nummer om de knopen te kunnen identificeren
+-->
+
+<!ATTLIST node
+	  rel	(hdf|hd|cmp|sup|su|obj1|pobj1|obj2|se|pc|vc|svp|predc|ld|me|
+		 predm|obcomp|mod|body|det|app|whd|rhd|cnj|crd|nucl|sat|tag|
+		 dp|top|mwp|dlink|--)
+		#REQUIRED
+
+
+	  cat	(smain|np|ppart|ppres|pp|ssub|inf|cp|du|ap|advp|ti|rel|whrel|
+		 whsub|conj|whq|oti|ahi|detp|sv1|svan|mwu|top|cat|part)
+		#IMPLIED
+	  pos		CDATA	#IMPLIED
+	  postag	CDATA	#IMPLIED
+	  lemma		CDATA	#IMPLIED
+	  begin		CDATA	#IMPLIED
+	  end		CDATA	#IMPLIED
+	  root		CDATA	#IMPLIED
+	  word		CDATA	#IMPLIED
+	  index		CDATA	#IMPLIED
+	  id		CDATA	#IMPLIED
+
+	  %nodeattr;
+
+	  sense		CDATA	#IMPLIED
+>
+
+<!--			Sentence					-->
+<!--			de tekst van de gehele zin			-->
+<!ELEMENT  sentence	(#PCDATA)					>
+
+<!ATTLIST  sentence
+		sentid	CDATA		#IMPLIED
+>
+
+
+<!--			Comments					-->
+<!--			een of meerdere comment elementen		-->
+<!ELEMENT  comments	(comment+)					>
+
+
+<!--			Comment						-->
+<!--			een commentaar entry				-->
+<!ELEMENT  comment	(#PCDATA)					>
+
