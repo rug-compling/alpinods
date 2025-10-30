@@ -24,7 +24,7 @@ Afhankelijkheden van `alpino_ds.dtd`
         - [alpino_full](http://www.let.rug.nl/vannoord/alp/Alpino/tred/)
     - `/net/corpora/LassyDevelopMod`
         - `go.mod`
-    - `/net/aps/haytabo/opt/alpinotools`
+    - `/net/aps/opt/alpinotools`
         - `go.mod`
     - alto
         - `go.mod`
