@@ -19,7 +19,7 @@ import (
 )
 
 // DtdVersion defines the highest supported alpino_ds.dtd version.
-const DtdVersion = "1.16"
+const DtdVersion = "1.17"
 
 // The AlpinoDS type encodes a complete document in the alpino_ds XML
 // format.
@@ -95,6 +95,7 @@ type NodeAttributes struct {
 	Dscmanual    string `xml:"dscmanual,attr,omitempty"`
 	Dscsense     string `xml:"dscsense,attr,omitempty"`
 	End          int    `xml:"end,attr"`
+	ExtPos       string `xml:"extpos,attr,omitempty"`
 	Frame        string `xml:"frame,attr,omitempty"`
 	Gen          string `xml:"gen,attr,omitempty"`
 	Genus        string `xml:"genus,attr,omitempty"`
@@ -191,10 +192,11 @@ type Data struct {
 
 // The Ud type encodes `/alpino_ds//node/ud`.
 type Ud struct {
-	ID    string `xml:"id,attr,omitempty"`
-	Form  string `xml:"form,attr,omitempty"`
-	Lemma string `xml:"lemma,attr,omitempty"`
-	Upos  string `xml:"upos,attr,omitempty"`
+	ID      string `xml:"id,attr,omitempty"`
+	Form    string `xml:"form,attr,omitempty"`
+	Lemma   string `xml:"lemma,attr,omitempty"`
+	Upos    string `xml:"upos,attr,omitempty"`
+	Uextpos string `xml:"uextpos,attr,omitempty"`
 	Feats
 	Head       string `xml:"head,attr,omitempty"`
 	Deprel     string `xml:"deprel,attr,omitempty"`
@@ -226,6 +228,7 @@ type Feats struct {
 	Degree   string `xml:"Degree,attr,omitempty"`
 	Foreign  string `xml:"Foreign,attr,omitempty"`
 	Gender   string `xml:"Gender,attr,omitempty"`
+	Mood     string `xml:"Mood,attr,omitempty"`
 	Number   string `xml:"Number,attr,omitempty"`
 	Person   string `xml:"Person,attr,omitempty"`
 	PronType string `xml:"PronType,attr,omitempty"`
@@ -268,11 +271,12 @@ type Deprel struct {
 
 	RecursionLimit string `xml:"recursion_limit,attr,omitempty"`
 
-	Ud    string `xml:"ud,attr,omitempty"`
-	ID    string `xml:"id,attr,omitempty"`
-	Form  string `xml:"form,attr,omitempty"`
-	Lemma string `xml:"lemma,attr,omitempty"`
-	Upos  string `xml:"upos,attr,omitempty"`
+	Ud      string `xml:"ud,attr,omitempty"`
+	ID      string `xml:"id,attr,omitempty"`
+	Form    string `xml:"form,attr,omitempty"`
+	Lemma   string `xml:"lemma,attr,omitempty"`
+	Upos    string `xml:"upos,attr,omitempty"`
+	Uextpos string `xml:"uextpos,attr,omitempty"`
 	Feats
 	Head      string `xml:"head,attr,omitempty"`
 	Deprel    string `xml:"deprel,attr,omitempty"`

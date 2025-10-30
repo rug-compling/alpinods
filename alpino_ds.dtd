@@ -3,6 +3,12 @@
 <!-- Alpino Dependency Structures DTD -->
 
 <!--
+Versie 1.17 per oktober 2025
+
+- feature PronType for UD, added possible values: Art Neg Tot
+- new feature for UD: Mood
+- new attribute for UD: extpos
+
 Versie 1.16 per februari 2023
  - is_np
  - is_vorfeld, is_nachfeld
@@ -76,8 +82,9 @@ Degree		(Pos|Cmp|Sup)			#IMPLIED
 Foreign		(Yes)				#IMPLIED
 Gender		CDATA			        #IMPLIED
 Number		(Sing|Plur)			#IMPLIED
+Mood            (Ind|Imp)                       #IMPLIED
 Person		(1|2|3)				#IMPLIED
-PronType	(Prs|Rcp|Int|Dem|Ind|Rel)	#IMPLIED
+PronType (Art|Dem|Ind|Int|Neg|Prs|Rcp|Rel|Tot)  #IMPLIED
 Reflex		(Yes)				#IMPLIED
 Tense		(Past|Pres)			#IMPLIED
 VerbForm	(Fin|Inf|Part)			#IMPLIED
@@ -85,6 +92,10 @@ VerbForm	(Fin|Inf|Part)			#IMPLIED
 
 <!ENTITY % upos "
 upos (ADJ|ADP|ADV|AUX|CCONJ|DET|INTJ|NOUN|NUM|PART|PRON|PROPN|PUNCT|SCONJ|SYM|VERB|X) #REQUIRED
+" >
+
+<!ENTITY % uextpos "
+uextpos (ADJ|ADP|ADV|AUX|CCONJ|DET|INTJ|PRON|PROPN|SCONJ) #IMPLIED
 " >
 
 <!-- relaties van dependencies, ZONDER root -->
@@ -104,6 +115,7 @@ id		NMTOKEN			#REQUIRED
 form		CDATA			#REQUIRED
 lemma		CDATA			#REQUIRED
 %upos;
+%uextpos;
 head		NMTOKEN			#REQUIRED
 deprel		CDATA			#REQUIRED
 deprel_aux	CDATA			#IMPLIED
@@ -440,6 +452,7 @@ MISC is not used.
 	   form		CDATA			#REQUIRED
 	   lemma	CDATA			#REQUIRED
 	   %upos;
+	   %uextpos;
 	   xpos		CDATA			#IMPLIED
 	   head		NMTOKEN			#REQUIRED
 	   deprel	CDATA			#REQUIRED
