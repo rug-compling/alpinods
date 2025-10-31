@@ -80,8 +80,8 @@ Definite	(Def|Ind)			#IMPLIED
 Degree		(Pos|Cmp|Sup)			#IMPLIED
 Foreign		(Yes)				#IMPLIED
 Gender		CDATA			        #IMPLIED
-Number		(Sing|Plur)			#IMPLIED
 Mood            (Ind|Imp)                       #IMPLIED
+Number		(Sing|Plur)			#IMPLIED
 Person		(1|2|3)				#IMPLIED
 PronType (Art|Dem|Ind|Int|Neg|Prs|Rcp|Rel|Tot)  #IMPLIED
 Reflex		(Yes)				#IMPLIED
