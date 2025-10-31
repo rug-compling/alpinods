@@ -95,7 +95,6 @@ type NodeAttributes struct {
 	Dscmanual    string `xml:"dscmanual,attr,omitempty"`
 	Dscsense     string `xml:"dscsense,attr,omitempty"`
 	End          int    `xml:"end,attr"`
-	ExtPos       string `xml:"extpos,attr,omitempty"`
 	Frame        string `xml:"frame,attr,omitempty"`
 	Gen          string `xml:"gen,attr,omitempty"`
 	Genus        string `xml:"genus,attr,omitempty"`
@@ -226,6 +225,7 @@ type Feats struct {
 	Case     string `xml:"Case,attr,omitempty"`
 	Definite string `xml:"Definite,attr,omitempty"`
 	Degree   string `xml:"Degree,attr,omitempty"`
+	ExtPos   string `xml:"ExtPos,attr,omitempty"`
 	Foreign  string `xml:"Foreign,attr,omitempty"`
 	Gender   string `xml:"Gender,attr,omitempty"`
 	Mood     string `xml:"Mood,attr,omitempty"`
@@ -271,12 +271,11 @@ type Deprel struct {
 
 	RecursionLimit string `xml:"recursion_limit,attr,omitempty"`
 
-	Ud      string `xml:"ud,attr,omitempty"`
-	ID      string `xml:"id,attr,omitempty"`
-	Form    string `xml:"form,attr,omitempty"`
-	Lemma   string `xml:"lemma,attr,omitempty"`
-	Upos    string `xml:"upos,attr,omitempty"`
-	Uextpos string `xml:"uextpos,attr,omitempty"`
+	Ud    string `xml:"ud,attr,omitempty"`
+	ID    string `xml:"id,attr,omitempty"`
+	Form  string `xml:"form,attr,omitempty"`
+	Lemma string `xml:"lemma,attr,omitempty"`
+	Upos  string `xml:"upos,attr,omitempty"`
 	Feats
 	Head      string `xml:"head,attr,omitempty"`
 	Deprel    string `xml:"deprel,attr,omitempty"`
