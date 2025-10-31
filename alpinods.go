@@ -191,11 +191,10 @@ type Data struct {
 
 // The Ud type encodes `/alpino_ds//node/ud`.
 type Ud struct {
-	ID      string `xml:"id,attr,omitempty"`
-	Form    string `xml:"form,attr,omitempty"`
-	Lemma   string `xml:"lemma,attr,omitempty"`
-	Upos    string `xml:"upos,attr,omitempty"`
-	Uextpos string `xml:"uextpos,attr,omitempty"`
+	ID    string `xml:"id,attr,omitempty"`
+	Form  string `xml:"form,attr,omitempty"`
+	Lemma string `xml:"lemma,attr,omitempty"`
+	Upos  string `xml:"upos,attr,omitempty"`
 	Feats
 	Head       string `xml:"head,attr,omitempty"`
 	Deprel     string `xml:"deprel,attr,omitempty"`
