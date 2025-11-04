@@ -78,6 +78,7 @@ Abbr		(Yes)				#IMPLIED
 Case		(Nom|Acc|Gen|Dat)		#IMPLIED
 Definite	(Def|Ind)			#IMPLIED
 Degree		(Pos|Cmp|Sup)			#IMPLIED
+ExtPos (ADJ|ADP|ADV|AUX|CCONJ|DET|INTJ|PRON|PROPN|SCONJ) #IMPLIED
 Foreign		(Yes)				#IMPLIED
 Gender		CDATA			        #IMPLIED
 Mood            (Ind|Imp)                       #IMPLIED
@@ -86,7 +87,6 @@ Person		(1|2|3)				#IMPLIED
 PronType (Art|Dem|Ind|Int|Neg|Prs|Rcp|Rel|Tot)  #IMPLIED
 Reflex		(Yes)				#IMPLIED
 Tense		(Past|Pres)			#IMPLIED
-ExtPos (ADJ|ADP|ADV|AUX|CCONJ|DET|INTJ|PRON|PROPN|SCONJ) #IMPLIED
 VerbForm	(Fin|Inf|Part)			#IMPLIED
 " >
 
