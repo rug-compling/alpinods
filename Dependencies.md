@@ -8,6 +8,7 @@ Afhankelijkheden van `alpino_ds.dtd`
         - `v2/version.go`
         - `Changes.txt`
         - `codemeta.json`
+        - `alpino_ds.dtd` (kopie van alpinods)
     - PaQu
         - `src/go.mod`
         - `src/internal/file/data/macros.txt` (versienummers)

@@ -3,7 +3,7 @@
 <!-- Alpino Dependency Structures DTD -->
 
 <!--
-Versie 1.17 per oktober 2025
+Versie 1.17 per november 2025
 
 - feature PronType for UD, added possible values: Art Neg Tot
 - new features for UD: ExtPos Mood
@@ -81,7 +81,7 @@ Degree		(Pos|Cmp|Sup)			#IMPLIED
 ExtPos (ADJ|ADP|ADV|AUX|CCONJ|DET|INTJ|PRON|PROPN|SCONJ) #IMPLIED
 Foreign		(Yes)				#IMPLIED
 Gender		CDATA			        #IMPLIED
-Mood            (Ind|Imp)                       #IMPLIED
+Mood            (Ind|Imp|Sub)                   #IMPLIED
 Number		(Sing|Plur)			#IMPLIED
 Person		(1|2|3)				#IMPLIED
 PronType (Art|Dem|Ind|Int|Neg|Prs|Rcp|Rel|Tot)  #IMPLIED
