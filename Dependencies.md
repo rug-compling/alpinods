@@ -12,6 +12,9 @@ Afhankelijkheden van `alpino_ds.dtd`
     - PaQu
         - `src/go.mod`
         - `src/internal/file/data/macros.txt` (versienummers)
+        - `src/internal/node/node.go`
+        - `src/pqserve/conllu.go`
+        - `src/pqserve/xpath_true.go`
         - `Changes.txt`
         - `codemeta.json`
     - AlpinoGraph
