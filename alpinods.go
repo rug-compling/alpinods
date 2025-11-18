@@ -18,6 +18,8 @@ import (
 	"strings"
 )
 
+// DEP:DTD:1.18
+
 // DtdVersion defines the highest supported alpino_ds.dtd version.
 const DtdVersion = "1.18"
 
@@ -295,6 +297,7 @@ type Attr struct {
 type Attrib struct {
 	Field string
 	Name  string
+	Type  reflect.Type
 }
 
 var (
@@ -376,6 +379,7 @@ func Attribs() []Attrib {
 			attrib = append(attrib, Attrib{
 				Field: f.Name,
 				Name:  strings.Split(x, ",")[0],
+				Type:  f.Type,
 			})
 		}
 	}

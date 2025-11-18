@@ -47,6 +47,7 @@ func Reduce(alpino *AlpinoDS) *AlpinoDS {
 func reducedCopy(node *Node) *Node {
 	n := &Node{
 		NodeAttributes: NodeAttributes{
+			// DEP:TRED
 			// minimal set recognized in TrEd
 			Begin:  node.Begin,
 			Cat:    node.Cat,
@@ -60,6 +61,7 @@ func reducedCopy(node *Node) *Node {
 			Root:   node.Root,
 			Sense:  node.Sense,
 			Word:   node.Word,
+			// DEP:TRED
 			// attributes added by TrEd upon save
 			Buiging:  node.Buiging,
 			Conjtype: node.Conjtype,
